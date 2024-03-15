@@ -5,6 +5,8 @@
 #include <cmath>
 #include "../utils/utils.h"
 #include <stdio.h>
+#include <cmath>
+#include <string>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND window,
@@ -237,8 +239,9 @@ void SaveMethod() noexcept
 float angle = 0.0f;
 
 static ImGuiComboFlags flags = 0;
-const char* items[] = { "sin x", "", "cos x", "tg x", "sec x", "csc x" };
+const char* items[] = { "sin x", "cos x", "tg x", "cotg x", "sec x", "csc x" };
 static int item_current_idx = 0;
+
 
 float DefaultColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 void gui::Render() noexcept
@@ -263,13 +266,13 @@ void gui::Render() noexcept
 	}
 
 	ImGui::Text("Calculator");
-	ImGui::SliderFloat("Angle", &angle, 0.0f, 360.0f);
+	ImGui::SliderAngle("Angle", &angle, 0.0f, 360.0f);
 	//ImGui::ListBox("Function", &current_item, items, IM_ARRAYSIZE(items), 4);
 	//ImGui::Combo("Function", &current_item, items, )
 
 	const char* function_preview_value = items[item_current_idx];
 
-	if (ImGui::BeginCombo("Function", function_preview_value, flags))
+	/*if (ImGui::BeginCombo("Function", function_preview_value, flags))
 	{
 		for (int n = 0; n < IM_ARRAYSIZE(items); n++)
 		{
@@ -282,7 +285,43 @@ void gui::Render() noexcept
 				ImGui::SetItemDefaultFocus();
 		}
 		ImGui::EndCombo();
+	}*/
+
+
+	float sinResult = sin(angle);
+	std::string sinStr = "sin x : " + std::to_string(sinResult);
+
+	float cosResult = cos(angle);
+	std::string cosStr = "cos x : " + std::to_string(cosResult);
+
+	float tanResult = tan(angle);
+	std::string tanStr = "tg x : " + std::to_string(tanResult);
+	if (angle == 90) {
+		tanStr = "tg x : Undefined";
 	}
-	ImGui::Text("Result: ");
+
+	float cotanResult = cos(angle) / sin(angle);
+	std::string cotanStr = "cotg x : " + std::to_string(cotanResult);
+	if (angle == 0) {
+		cotanStr = "cotg x : Undefined";
+	}
+
+	float secResult = 1 / cos(angle);
+	std::string secStr = "sec x : " + std::to_string(secResult);
+
+	float cscResult = 1 / sin(angle);
+	std::string cscStr = "csc x : " + std::to_string(cscResult);
+	if (angle == 0) {
+		cscStr = "csc x : Undefined";
+	}
+
+
+	ImGui::Text(sinStr.c_str());
+	ImGui::Text(cosStr.c_str());
+	ImGui::Text(tanStr.c_str());
+	ImGui::Text(cotanStr.c_str());
+	ImGui::Text(secStr.c_str());
+	ImGui::Text(cscStr.c_str());
+
 	ImGui::End();
 }

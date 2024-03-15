@@ -45,6 +45,9 @@
     <ClInclude Include="utils\utils.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
+    <ClInclude Include="utils\maths.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -75,6 +78,9 @@
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
     <ClCompile Include="utils\utils.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\maths.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
   </ItemGroup>
