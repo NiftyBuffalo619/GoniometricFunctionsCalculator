@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <string>
+#include "../utils/maths.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND window,
@@ -296,22 +297,29 @@ void gui::Render() noexcept
 
 	float tanResult = tan(angle);
 	std::string tanStr = "tg x : " + std::to_string(tanResult);
-	if (angle == 90) {
+	if (angle == 3.14159265358979323846f / 2 || angle == 1.5f * 3.14159265358979323846f) {
 		tanStr = "tg x : Undefined";
 	}
 
 	float cotanResult = cos(angle) / sin(angle);
 	std::string cotanStr = "cotg x : " + std::to_string(cotanResult);
-	if (angle == 0) {
+	if (angle == 0 || angle == 3.14159265358979323846f  || angle == 2 * 3.14159265358979323846f) {
 		cotanStr = "cotg x : Undefined";
 	}
 
 	float secResult = 1 / cos(angle);
 	std::string secStr = "sec x : " + std::to_string(secResult);
+	/*if (angle == 1.57079637f) {
+		secStr = "sec x : Undefined";
+	}
+	*/
+	if (angle == 3.14159265358979323846f / 2 || angle == 1.5f * 3.14159265358979323846f) {
+		secStr = "sec x : Undefined";
+	}
 
 	float cscResult = 1 / sin(angle);
 	std::string cscStr = "csc x : " + std::to_string(cscResult);
-	if (angle == 0) {
+	if (angle == 0 || angle == 3.14159265358979323846f  || angle == 2 * 3.14159265358979323846f) {
 		cscStr = "csc x : Undefined";
 	}
 
@@ -322,6 +330,9 @@ void gui::Render() noexcept
 	ImGui::Text(cotanStr.c_str());
 	ImGui::Text(secStr.c_str());
 	ImGui::Text(cscStr.c_str());
+
+	std::string RadiansString = "Radians : " + std::to_string(angle);
+	ImGui::Text(RadiansString.c_str());
 
 	ImGui::End();
 }
