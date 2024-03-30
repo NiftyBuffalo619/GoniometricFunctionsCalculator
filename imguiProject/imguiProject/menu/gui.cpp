@@ -333,6 +333,46 @@ void gui::Render() noexcept
 
 	std::string RadiansString = "Radians : " + std::to_string(angle);
 	ImGui::Text(RadiansString.c_str());
+	if (ImGui::CollapsingHeader("Graphs")) {
+		if (ImGui::TreeNode("Sinus")) {
+			ImGui::SeparatorText("Sinus");
+			float sinsamples[100];
+			for (int n = 0; n < 100; n++)
+				sinsamples[n] = sinf(n * 0.2f + ImGui::GetTime() * 1.5f);
+			ImGui::PlotLines("Sine Graph", sinsamples, 100);
+		}
+		if (ImGui::TreeNode("Cosinus")) {
+			ImGui::SeparatorText("Cosinus");
+			float cossamples[100];
+			for (int n = 0; n < 100; n++)
+				cossamples[n] = cos(n * 0.2f + ImGui::GetTime() * 1.5f);
+			ImGui::PlotLines("Cosine Graph", cossamples, 100);
+		}
+		if (ImGui::TreeNode("Tangens")) {
+			ImGui::SeparatorText("Tangens");
+			float tgsamples[100];
+			for (int n = 0; n < 100; n++)
+				tgsamples[n] = tan(n + ImGui::GetTime());
+			ImGui::PlotLines("Tangens Graph", tgsamples, 100);
+		}
+		if (ImGui::TreeNode("Cotangens")) {
+			ImGui::SeparatorText("Cotangens");
+		}
+		if (ImGui::TreeNode("Secans")) {
+			ImGui::SeparatorText("Secans");
+			float secsamples[100];
+			for (int n = 0; n < 100; n++)
+				secsamples[n] = 1 / cos(n + ImGui::GetTime());
+			ImGui::PlotLines("Secans Graph", secsamples, 100);
+		}
+		if (ImGui::TreeNode("Cosecans")) {
+			ImGui::SeparatorText("Cosecans");
+		}
+	}
 
+	if (ImGui::CollapsingHeader("Configuration")) {
+		ImGui::SeparatorText("Configuration");
+		ImGui::Text("Coming soon...");
+	}
 	ImGui::End();
 }
