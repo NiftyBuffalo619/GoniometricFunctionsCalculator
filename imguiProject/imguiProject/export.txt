@@ -1,0 +1,8 @@
+	 --- Export --- 
+Angle in degrees: Angle in radians:  
+sin : 
+cos : 
+tg : 
+cotg : 
+sec : 
+csc : 

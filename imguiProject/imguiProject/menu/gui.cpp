@@ -8,6 +8,7 @@
 #include <cmath>
 #include <string>
 #include "../utils/maths.h"
+#include <fstream>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
 	HWND window,
@@ -248,6 +249,7 @@ float DefaultColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 void gui::Render() noexcept
 {
 	ImGui::SetNextWindowPos({ 0, 0 });
+	ImGui::SetNextWindowPos(ImVec2(0, 20), ImGuiCond_Always);
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
 	ImGui::Begin(
 		"Goniometric Functions Calculator",
@@ -255,15 +257,40 @@ void gui::Render() noexcept
 		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoSavedSettings |
 		ImGuiWindowFlags_NoCollapse |
-		ImGuiWindowFlags_NoMove
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_MenuBar
 	);
-	if (ImGui::BeginMenuBar())
-	{
-		if (ImGui::BeginMenu("Menu"))
+	if (ImGui::BeginMainMenuBar()) {
+		if (ImGui::BeginMenuBar())
 		{
-			ImGui::MenuItem("Main menu bar", NULL, false, true);
-			ImGui::EndMenu();
+			if (ImGui::BeginMenu("Menu"))
+			{
+				ImGui::MenuItem("Main menu bar", NULL, false, true);
+				if (ImGui::MenuItem("Save", NULL, false, true)) {
+					std::ofstream outputFile("export.txt");
+
+					if (outputFile.is_open()) {
+						outputFile << "\t --- Export --- \n";
+						outputFile << "Angle in degrees: " << "Angle in radians:  \n";
+						outputFile << "sin : \n";
+						outputFile << "cos : \n";
+						outputFile << "tg : \n";
+						outputFile << "cotg : \n";
+						outputFile << "sec : \n";
+						outputFile << "csc : \n";
+
+						outputFile.close();
+						MessageBox(NULL, "Successfully exported", "Info", MB_OK | MB_ICONINFORMATION);
+					}
+					else {
+						MessageBox(NULL, "An error occurred", "Error", MB_OK | MB_ICONERROR);
+					}
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenuBar();
 		}
+		ImGui::EndMainMenuBar();
 	}
 
 	ImGui::Text("Calculator");
@@ -374,5 +401,6 @@ void gui::Render() noexcept
 		ImGui::SeparatorText("Configuration");
 		ImGui::Text("Coming soon...");
 	}
+	ImGui::Text("Made by Lukas Polacek");
 	ImGui::End();
 }
