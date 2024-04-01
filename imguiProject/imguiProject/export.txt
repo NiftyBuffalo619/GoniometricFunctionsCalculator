@@ -1,5 +1,6 @@
 	 --- Export --- 
-Angle in degrees: Angle in radians:  
+Angle in degrees: 90° 
+Angle in radians: 1.5708 
 sin : 
 cos : 
 tg : 

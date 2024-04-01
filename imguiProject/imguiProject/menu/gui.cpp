@@ -271,7 +271,7 @@ void gui::Render() noexcept
 
 					if (outputFile.is_open()) {
 						outputFile << "\t --- Export --- \n";
-						outputFile << "Angle in degrees: " << "Angle in radians:  \n";
+						outputFile << "Angle in degrees: " << angle * (180 / 3.14159265358979323846f) << "° \n" << "Angle in radians: " << angle << " \n";
 						outputFile << "sin : \n";
 						outputFile << "cos : \n";
 						outputFile << "tg : \n";
@@ -280,7 +280,8 @@ void gui::Render() noexcept
 						outputFile << "csc : \n";
 
 						outputFile.close();
-						MessageBox(NULL, "Successfully exported", "Info", MB_OK | MB_ICONINFORMATION);
+						//MessageBox(NULL, "Successfully exported", "Info", MB_OK | MB_ICONINFORMATION);
+						MessageBox(NULL, "Successfully exported", "Info", MB_SERVICE_NOTIFICATION | MB_ICONINFORMATION); // This will display a new window message box
 					}
 					else {
 						MessageBox(NULL, "An error occurred", "Error", MB_OK | MB_ICONERROR);
