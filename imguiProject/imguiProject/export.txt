@@ -1,9 +1,9 @@
 	 --- Export --- 
-Angle in degrees: 90° 
-Angle in radians: 1.5708 
-sin : 
-cos : 
-tg : 
-cotg : 
-sec : 
-csc : 
+Angle in degrees: 360° 
+Angle in radians: 6.28319 
+sin x : 0.000000 
+cos x : 1.000000 
+tg x : 0.000000 
+cotg x : Undefined 
+sec x : 1.000000 
+csc x : Undefined 

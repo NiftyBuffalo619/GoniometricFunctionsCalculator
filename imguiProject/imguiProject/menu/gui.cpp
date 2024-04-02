@@ -238,6 +238,20 @@ void SaveMethod() noexcept
 	//fileptr = fopen("file.txt", "w");
 
 }
+
+static void HelpMarker(const char* desc)
+{
+	ImGui::TextDisabled("(?)");
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted(desc);
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+}
+
 float angle = 0.0f;
 
 static ImGuiComboFlags flags = 0;
@@ -249,7 +263,7 @@ float DefaultColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 void gui::Render() noexcept
 {
 	ImGui::SetNextWindowPos({ 0, 0 });
-	ImGui::SetNextWindowPos(ImVec2(0, 20), ImGuiCond_Always);
+	//ImGui::SetNextWindowPos(ImVec2(0, 20), ImGuiCond_Always);
 	ImGui::SetNextWindowSize({ WIDTH, HEIGHT });
 	ImGui::Begin(
 		"Goniometric Functions Calculator",
@@ -260,7 +274,41 @@ void gui::Render() noexcept
 		ImGuiWindowFlags_NoMove |
 		ImGuiWindowFlags_MenuBar
 	);
-	if (ImGui::BeginMainMenuBar()) {
+	float sinResult = sin(angle);
+	std::string sinStr = "sin x : " + std::to_string(sinResult);
+
+	float cosResult = cos(angle);
+	std::string cosStr = "cos x : " + std::to_string(cosResult);
+
+	float tanResult = tan(angle);
+	std::string tanStr = "tg x : " + std::to_string(tanResult);
+	if (angle == 3.14159265358979323846f / 2 || angle == 1.5f * 3.14159265358979323846f) {
+		tanStr = "tg x : Undefined";
+	}
+
+	float cotanResult = cos(angle) / sin(angle);
+	std::string cotanStr = "cotg x : " + std::to_string(cotanResult);
+	if (angle == 0 || angle == 3.14159265358979323846f || angle == 2 * 3.14159265358979323846f) {
+		cotanStr = "cotg x : Undefined";
+	}
+
+	float secResult = 1 / cos(angle);
+	std::string secStr = "sec x : " + std::to_string(secResult);
+	/*if (angle == 1.57079637f) {
+		secStr = "sec x : Undefined";
+	}
+	*/
+	if (angle == 3.14159265358979323846f / 2 || angle == 1.5f * 3.14159265358979323846f) {
+		secStr = "sec x : Undefined";
+	}
+
+	float cscResult = 1 / sin(angle);
+	std::string cscStr = "csc x : " + std::to_string(cscResult);
+	if (angle == 0 || angle == 3.14159265358979323846f || angle == 2 * 3.14159265358979323846f) {
+		cscStr = "csc x : Undefined";
+	}
+
+	//if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenuBar())
 		{
 			if (ImGui::BeginMenu("Menu"))
@@ -272,12 +320,12 @@ void gui::Render() noexcept
 					if (outputFile.is_open()) {
 						outputFile << "\t --- Export --- \n";
 						outputFile << "Angle in degrees: " << angle * (180 / 3.14159265358979323846f) << "° \n" << "Angle in radians: " << angle << " \n";
-						outputFile << "sin : \n";
-						outputFile << "cos : \n";
-						outputFile << "tg : \n";
-						outputFile << "cotg : \n";
-						outputFile << "sec : \n";
-						outputFile << "csc : \n";
+						outputFile << sinStr << " \n";
+						outputFile << cosStr  << " \n";
+						outputFile << tanStr << " \n";
+						outputFile << cotanStr << " \n";
+						outputFile << secStr << " \n";
+						outputFile << cscStr << " \n";
 
 						outputFile.close();
 						//MessageBox(NULL, "Successfully exported", "Info", MB_OK | MB_ICONINFORMATION);
@@ -291,8 +339,8 @@ void gui::Render() noexcept
 			}
 			ImGui::EndMenuBar();
 		}
-		ImGui::EndMainMenuBar();
-	}
+		//ImGui::EndMainMenuBar();
+	//}
 
 	ImGui::Text("Calculator");
 	ImGui::SliderAngle("Angle", &angle, 0.0f, 360.0f);
@@ -317,39 +365,6 @@ void gui::Render() noexcept
 	}*/
 
 
-	float sinResult = sin(angle);
-	std::string sinStr = "sin x : " + std::to_string(sinResult);
-
-	float cosResult = cos(angle);
-	std::string cosStr = "cos x : " + std::to_string(cosResult);
-
-	float tanResult = tan(angle);
-	std::string tanStr = "tg x : " + std::to_string(tanResult);
-	if (angle == 3.14159265358979323846f / 2 || angle == 1.5f * 3.14159265358979323846f) {
-		tanStr = "tg x : Undefined";
-	}
-
-	float cotanResult = cos(angle) / sin(angle);
-	std::string cotanStr = "cotg x : " + std::to_string(cotanResult);
-	if (angle == 0 || angle == 3.14159265358979323846f  || angle == 2 * 3.14159265358979323846f) {
-		cotanStr = "cotg x : Undefined";
-	}
-
-	float secResult = 1 / cos(angle);
-	std::string secStr = "sec x : " + std::to_string(secResult);
-	/*if (angle == 1.57079637f) {
-		secStr = "sec x : Undefined";
-	}
-	*/
-	if (angle == 3.14159265358979323846f / 2 || angle == 1.5f * 3.14159265358979323846f) {
-		secStr = "sec x : Undefined";
-	}
-
-	float cscResult = 1 / sin(angle);
-	std::string cscStr = "csc x : " + std::to_string(cscResult);
-	if (angle == 0 || angle == 3.14159265358979323846f  || angle == 2 * 3.14159265358979323846f) {
-		cscStr = "csc x : Undefined";
-	}
 
 
 	ImGui::Text(sinStr.c_str());
@@ -361,6 +376,8 @@ void gui::Render() noexcept
 
 	std::string RadiansString = "Radians : " + std::to_string(angle);
 	ImGui::Text(RadiansString.c_str());
+	ImGui::SameLine();
+	HelpMarker("The angle in radians you can save this to a txt file in the menu");
 	if (ImGui::CollapsingHeader("Graphs")) {
 		if (ImGui::TreeNode("Sinus")) {
 			ImGui::SeparatorText("Sinus");
